@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import styles from "../../styles/Home.module.css";
-import { apiData, rateID } from "../../atoms/name";
+import { apiData } from "../../atoms/name";
 import { useRecoilState } from "recoil";
 import { rateIdSelector } from "../../selectors/name";
 
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
 
-function CommentsPage() {
+function RatesPage() {
   const [response, setResponse] = useRecoilState(rateIdSelector);
   const [apisData, setApiData] = useRecoilState(apiData);
 
@@ -45,7 +45,7 @@ function CommentsPage() {
       }
     };
     getData();
-  }, [response]);
+  }, [apisData, response, setApiData]);
 
   return (
     <div className={styles.container}>
@@ -68,13 +68,13 @@ function CommentsPage() {
                 return item.rate_id === response;
               })
               .map((item) => (
-                <>
+                <div key={item?.rate_id}>
                   {" "}
                   <div>Rate: {item?.rate}</div>
                   <div>Rate ID: {item?.rate_id}</div>
                   <div>Ask : {item?.ask}</div>
                   <div>Bid : {item?.bid}</div>
-                </>
+                </div>
               ))}
           </div>
         </div>
@@ -82,4 +82,4 @@ function CommentsPage() {
     </div>
   );
 }
-export default CommentsPage;
+export default RatesPage;
